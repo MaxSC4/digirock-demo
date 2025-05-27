@@ -1,215 +1,257 @@
+/* =============================================================================
+   style.css - Consolidated styles for DigiRock3D Demo
+   Merged from base, variables, utilities, layout, animations,
+   theme-toggle, toast, toolbar, loader, magnifier, meta-sidebar,
+   popup, tooltip, view-toggle and mobile CSS.
+   ============================================================================= */
+
 /* --------------------------------------------------------------------------
-   Variables (palette, typographie, thèmes)
-   Source: variables.css fileciteturn0file3
+   Variables & Themes
    -------------------------------------------------------------------------- */
 :root {
-    --ui-offset: clamp(0.5rem, 5vw, 1rem);
-    --ui-padding: clamp(0.25rem, 1vw, 0.5rem);
-    --ui-gap: clamp(0.25rem, 1vw, 0.5rem);
-    --ui-radius: clamp(0.5rem, 3vw, 1rem);
-    --icon-size: clamp(0.87rem, 2.5vw, 1.2rem);
-    --font-scale: clamp(0.75rem, 2vw, 0.9rem);
+  /* UI sizing */
+  --ui-offset: clamp(0.5rem, 5vw, 1rem);
+  --ui-padding: clamp(0.25rem, 1vw, 0.5rem);
+  --ui-gap: clamp(0.25rem, 1vw, 0.5rem);
+  --ui-radius: clamp(0.5rem, 3vw, 1rem);
+  --icon-size: clamp(0.87rem, 2.5vw, 1.2rem);
+  --font-scale: clamp(0.75rem, 2vw, 0.9rem);
 
-    --color-bg: #ffffff;
-    --color-fg: #333333;
-    --color-primary: #51247A;
-    --color-secondary: #CBAE88;
-    --color-panel: rgba(255, 255, 255, 0.95);
-    --shadow-ui: 0 8px 20px rgba(0, 0, 0, 0.1);
-    --shadow-popup: 0 6px 20px rgba(0, 0, 0, 0.12);
+  /* Color palette */
+  --color-bg: #ffffff;
+  --color-fg: #333333;
+  --color-primary: #51247A;
+  --color-secondary: #CBAE88;
+  --color-panel: rgba(255, 255, 255, 0.95);
+  --color-tooltip-bg: var(--color-secondary);
+  --color-tooltip-fg: var(--color-bg);
 
-    --font-base: 'Open Sans', sans-serif;
-    --anim-duration: 0.5s;
-    --anim-ease: ease-out;
+  /* Shadows */
+  --shadow-ui: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --shadow-popup: 0 6px 20px rgba(0, 0, 0, 0.12);
+
+  /* Typography & animation */
+  --font-base: 'Open Sans', sans-serif;
+  --anim-duration: 0.5s;
+  --anim-ease: ease-out;
+
+  /* Toolbar */
+  --toolbar-padding: var(--ui-padding);
+  --toolbar-icon-size: var(--icon-size);
 }
 
 :root[data-theme="dark"] {
-    --color-bg: #1a1a1a;
-    --color-fg: #eeeeee;
-    --color-primary: #CBAE88;
-    --color-secondary: #51247A;
-    --color-panel: rgba(30, 30, 30, 0.95);
-    --shadow-ui: 0 8px 20px rgba(0, 0, 0, 0.4);
-    --shadow-popup: 0 6px 20px rgba(0, 0, 0, 0.6);
+  --color-bg: #1a1a1a;
+  --color-fg: #eeeeee;
+  --color-primary: #CBAE88;
+  --color-secondary: #51247A;
+  --color-panel: rgba(30,30,30,0.95);
+  --shadow-ui: 0 8px 20px rgba(0,0,0,0.4);
+  --shadow-popup: 0 6px 20px rgba(0,0,0,0.6);
+  --color-tooltip-bg: var(--color-secondary);
+  --color-tooltip-fg: var(--color-bg);
 }
 
 /* --------------------------------------------------------------------------
-   Reset & typographie de base
-   Source: base.css fileciteturn0file0
+   Reset & Base Typography
    -------------------------------------------------------------------------- */
-html, body {
-    height: 100%;
-    margin: 0;
-    overflow-x: hidden;
-    background: var(--color-bg);
-    color: var(--color-fg);
-}
-body,
-button,
-.view-btn,
-.tooltip-text,
-.loader-text {
-    font-family: var(--font-base) !important;
-    margin: 0;
-    padding: 0;
-}
-button {
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
+*,*::before,*::after{box-sizing:border-box}
+html, body {margin:0;padding:0; height:100%; overflow-x:hidden; background:var(--color-bg); color:var(--color-fg);}
+body, button, .view-btn, .tooltip-text, .loader-text {font-family:var(--font-base) !important;}
+button{background:transparent;border:none;cursor:pointer;}
+img, svg{display:block;max-width:100%;height:auto;}
+ul{list-style:none;margin:0;padding:0;}
+a{text-decoration:none;color:inherit;}
 
 /* --------------------------------------------------------------------------
-   Utilitaires généraux
-   Source: utilities.css fileciteturn0file5
+   Utilities
    -------------------------------------------------------------------------- */
-.centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.btn-hover-scale {
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.btn-hover-scale:hover {
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(81, 36, 122, 0.2);
-}
+.centered{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.btn-hover-scale{transition:transform 0.2s ease,box-shadow 0.2s ease}
+.btn-hover-scale:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(81,36,122,0.2)}
+.fade-in{animation:fadeIn var(--anim-duration) var(--anim-ease) forwards}
 
 /* --------------------------------------------------------------------------
-   Navbar commune
+   Layout: Navbar, Hero & Cards
    -------------------------------------------------------------------------- */
-.navbar {
-    background: var(--color-panel);
-    box-shadow: var(--shadow-ui);
-    padding: var(--ui-padding) var(--ui-offset);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-.navbar ul {
-    list-style: none;
-    display: flex;
-    gap: var(--ui-gap);
-    margin: 0;
-    padding: 0;
-    justify-content: center;
-}
-.navbar a {
-    color: var(--color-fg);
-    text-decoration: none;
-    font-weight: 600;
-    padding: var(--ui-padding) var(--ui-offset);
-    border-radius: var(--ui-radius);
-    transition: background var(--anim-duration) var(--anim-ease);
-}
-.navbar a:hover {
-    background: var(--color-secondary);
-    color: var(--color-bg);
-}
+.navbar{background:var(--color-panel);box-shadow:var(--shadow-ui);padding:var(--ui-padding) var(--ui-offset);position:sticky;top:0;z-index:100;}
+.navbar ul{display:flex;justify-content:center;gap:var(--ui-gap);}
+.navbar a{padding:var(--ui-padding) var(--ui-offset);border-radius:var(--ui-radius);font-weight:600;transition:background var(--anim-duration) var(--anim-ease)}
+.navbar a:hover{background:var(--color-secondary);color:var(--color-bg)}
+
+.hero{position:relative;width:100%;height:60vh;display:flex;align-items:center;justify-content:center;background-position:center;background-size:cover}
+.hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
+.hero-title{position:relative;color:var(--color-bg);font-size:clamp(2rem,5vw,4rem);text-shadow:0 2px 8px rgba(0,0,0,0.6)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--ui-gap);padding:var(--ui-offset)}
+.card{background:var(--color-panel);border-radius:var(--ui-radius);overflow:hidden;box-shadow:var(--shadow-ui);text-align:center;transition:transform var(--anim-duration) var(--anim-ease),box-shadow var(--anim-duration) var(--anim-ease)}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-popup)}
+.card h3{margin:var(--ui-padding) 0;font-size:1.1rem}
 
 /* --------------------------------------------------------------------------
-   Hero section
+   Pages Container
    -------------------------------------------------------------------------- */
+.container{max-width:1200px;margin:2rem auto;padding:0 var(--ui-offset)}
+.container h1{font-size:2rem;margin-bottom:1rem}
+
+/* --------------------------------------------------------------------------
+   Sample Name Badge
+   -------------------------------------------------------------------------- */
+.rock-name{position:fixed;top:var(--ui-offset);right:var(--ui-offset);display:flex;align-items:center;gap:var(--ui-gap);background:var(--color-panel);color:var(--color-primary);padding:var(--ui-padding) calc(var(--ui-padding)*1.75);border-radius:var(--ui-radius);font-size:var(--font-scale);font-weight:600;backdrop-filter:blur(4px);box-shadow:var(--shadow-ui);animation:fadeIn var(--anim-duration) var(--anim-ease);z-index:200}
+.rock-name .icon{width:var(--icon-size);height:var(--icon-size);stroke:var(--color-primary)}
+
+/* --------------------------------------------------------------------------
+   Theme Toggle Button
+   -------------------------------------------------------------------------- */
+#toggleTheme{position:fixed;top:60px;right:20px;width:40px;height:40px;background:var(--color-panel);border-radius:50%;box-shadow:var(--shadow-ui);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100}
+#toggleTheme .icon{width:24px;height:24px;stroke:var(--color-primary);transition:transform 0.2s ease}
+#toggleTheme:hover .icon{transform:scale(1.1)}
+
+/* --------------------------------------------------------------------------
+   Toast Notifications
+   -------------------------------------------------------------------------- */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--color-primary);color:var(--color-bg);padding:10px 16px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.15);opacity:0;transform:translateY(20px);transition:opacity 0.3s ease,transform 0.3s ease;display:flex;align-items:center;gap:8px;pointer-events:none;z-index:500}
+#toast.show{opacity:1;transform:translateY(0)}
+#toastText{margin:0}
+
+/* --------------------------------------------------------------------------
+   Toolbar UI
+   -------------------------------------------------------------------------- */
+.toolbar-ui{position:fixed;bottom:var(--toolbar-padding);left:50%;transform:translateX(-50%);display:flex;gap:var(--toolbar-padding);background:var(--color-panel);padding:var(--toolbar-padding) calc(var(--toolbar-padding));border-radius:calc(var(--toolbar-padding)*2);box-shadow:var(--shadow-ui);backdrop-filter:blur(8px);animation:fadeIn var(--anim-duration) var(--anim-ease);z-index:100}
+.toolbar-ui button{padding:var(--toolbar-padding);border:none;border-radius:var(--toolbar-padding);transition:transform 0.2s ease,box-shadow 0.2s ease;display:flex;align-items:center;justify-content:center}
+.toolbar-ui button:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(81,36,122,0.2)}
+.toolbar-ui .icon{width:var(--toolbar-icon-size);height:var(--toolbar-icon-size);stroke:var(--color-primary);stroke-width:2}
+
+/* --------------------------------------------------------------------------
+   Loader
+   -------------------------------------------------------------------------- */
+#loader3D, .geo-loader{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:600;display:none}
+.geo-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fadeIn var(--anim-duration) var(--anim-ease)}
+.circle-loader{animation:dash 1.5s ease-in-out infinite;stroke-dasharray:90,150;color:var(--color-primary)}
+.loader-text{font-size:1rem;font-weight:600;color:var(--color-fg);margin-top:16px}
+
+/* --------------------------------------------------------------------------
+   Magnifier
+   -------------------------------------------------------------------------- */
+.loupe2d{position:absolute;width:100px;height:100px;border:2px solid var(--color-primary);border-radius:50%;background:var(--color-panel);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
+
+/* --------------------------------------------------------------------------
+   Meta Sidebar
+   -------------------------------------------------------------------------- */
+.meta-sidebar{position:fixed;top:0;right:0;width:300px;height:100%;background:var(--color-panel);box-shadow:-4px 0 12px rgba(0,0,0,0.1);padding:var(--ui-offset);overflow-y:auto;transform:translateX(100%);transition:transform var(--anim-duration) var(--anim-ease);z-index:150}
+.meta-sidebar.open{transform:translateX(0)}
+.meta-sidebar h2{margin-top:0}
+
+/* --------------------------------------------------------------------------
+   Popup
+   -------------------------------------------------------------------------- */
+.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--color-panel);border-radius:var(--ui-radius);box-shadow:var(--shadow-popup);padding:var(--ui-offset) var(--ui-offset*2);z-index:200;display:none}
+.popup.open{display:block}
+
+/* --------------------------------------------------------------------------
+   Tooltip
+   -------------------------------------------------------------------------- */
+.tooltip{position:relative;display:inline-block}
+.tooltip .tooltip-text{visibility:hidden;width:max-content;background:var(--color-tooltip-bg);color:var(--color-tooltip-fg);text-align:center;padding:var(--ui-padding);border-radius:var(--ui-radius);position:absolute;z-index:300;bottom:125%;left:50%;transform:translateX(-50%);opacity:0;transition:opacity 0.3s}
+.tooltip:hover .tooltip-text{visibility:visible;opacity:1}
+
+/* --------------------------------------------------------------------------
+   View Toggle
+   -------------------------------------------------------------------------- */
+.view-toggle{display:flex;gap:var(--ui-padding)}
+.view-toggle button{background:var(--color-panel);border-radius:var(--ui-radius);padding:var(--ui-padding);transition:background var(--anim-duration) var(--anim-ease)}
+.view-toggle button.active{background:var(--color-primary);color:var(--color-bg)}
+
+/* --------------------------------------------------------------------------
+   Hero animations: titre et sous-titre
+   -------------------------------------------------------------------------- */
+
 .hero {
-    position: relative;
-    width: 100%;
-    height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-position: center;
-    background-size: cover;
+  position: relative;
+  overflow: hidden;
 }
-.hero .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.4);
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(
+    circle at center,
+    rgba(81, 36, 122, 0.6),
+    rgba(203, 174, 136, 0.6),
+    rgba(81, 36, 122, 0.6)
+  );
+  filter: blur(100px);
+  animation: blobRotate 30s linear infinite;
+  z-index: 0;
 }
+
+.overlay {
+  z-index: 1; /* on place l’overlay au-dessus du blob */
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-title,
+.hero-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
 .hero-title {
-    position: relative;
-    color: var(--color-bg);
-    font-size: clamp(2rem, 5vw, 4rem);
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  animation: fadeInUp var(--anim-duration) var(--anim-ease) forwards;
+  animation-delay: 0.5s;
 }
 
-/* --------------------------------------------------------------------------
-   Cards layout
-   -------------------------------------------------------------------------- */
-.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: var(--ui-gap);
-    padding: var(--ui-offset);
-}
-.card {
-    background: var(--color-panel);
-    border-radius: var(--ui-radius);
-    overflow: hidden;
-    box-shadow: var(--shadow-ui);
-    text-align: center;
-    transition: transform var(--anim-duration) var(--anim-ease),
-                box-shadow var(--anim-duration) var(--anim-ease);
-}
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-popup);
-}
-.card img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-.card h3 {
-    margin: var(--ui-padding) 0;
-    color: var(--color-fg);
-    font-size: 1.1rem;
+.hero-subtitle {
+  font-size: clamp(1rem, 3vw, 2rem);
+  color: var(--color-secondary);
+  animation: fadeInUp var(--anim-duration) var(--anim-ease) forwards;
+  animation-delay: 1s;
 }
 
-/* --------------------------------------------------------------------------
-   Animations globales
-   Source: animations.css fileciteturn0file4
-   -------------------------------------------------------------------------- */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-@keyframes dash {
-    0%   { stroke-dasharray: 1,200; stroke-dashoffset: 0; }
-    50%  { stroke-dasharray: 90,150; stroke-dashoffset: -35; }
-    100% { stroke-dasharray: 90,150; stroke-dashoffset: -124; }
-}
-@keyframes spin {
-    0%   { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-@keyframes pulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(81,36,122,0.3); }
-    50%      { box-shadow: 0 0 0 8px rgba(81,36,122,0); }
+@keyframes blobRotate {
+  from   { transform: rotate(0deg);   }
+  to     { transform: rotate(360deg); }
 }
 
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 /* --------------------------------------------------------------------------
-   Styles responsives
-   Source: mobile.css fileciteturn0file2
+   Animations Keyframes
    -------------------------------------------------------------------------- */
-@media screen and (max-width: 1280px) {
-    .navbar ul {
-        flex-wrap: wrap;
-    }
-    .hero {
-        height: 40vh;
-    }
-    .cards {
-        padding: var(--ui-padding);
-    }
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes dash{0%{stroke-dasharray:1,200;stroke-dashoffset:0}50%{stroke-dasharray:90,150;stroke-dashoffset:-35}100%{stroke-dasharray:90,150;stroke-dashoffset:-124}}
+@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(81,36,122,0.3)}50%{box-shadow:0 0 0 8px rgba(81,36,122,0)}}
+
+/* --------------------------------------------------------------------------
+   Responsive (mobile)
+   -------------------------------------------------------------------------- */
+@media screen and (max-width:1280px){
+  .navbar ul{flex-wrap:wrap}
+  .hero{height:40vh}
+  .cards{padding:var(--ui-padding)}
+  .meta-sidebar{width:100%}
 }
