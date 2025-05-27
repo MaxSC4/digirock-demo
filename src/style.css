@@ -89,6 +89,33 @@ a{text-decoration:none;color:inherit;}
 .card h3{margin:var(--ui-padding) 0;font-size:1.1rem}
 
 /* --------------------------------------------------------------------------
+   Logo group in navbar
+   -------------------------------------------------------------------------- */
+.logo-group {
+  display: flex;
+  align-items: center;
+  gap: var(--ui-gap);
+  margin-right: auto; 
+}
+
+.logo-group img {
+  height: 50px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0) invert(0.2); 
+  transition: filter 0.3s ease;
+}
+
+:root[data-theme="dark"] .logo-group img {
+  filter: brightness(0) invert(1); 
+}
+
+.logo-group a:hover img {
+  transform: scale(1.05);
+}
+
+
+/* --------------------------------------------------------------------------
    Pages Container
    -------------------------------------------------------------------------- */
 .container{max-width:1200px;margin:2rem auto;padding:0 var(--ui-offset)}
@@ -250,8 +277,6 @@ a{text-decoration:none;color:inherit;}
     transform: translateY(0);
   }
 }
-
-
 
 /* --------------------------------------------------------------------------
    Animations Keyframes
