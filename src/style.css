@@ -166,9 +166,20 @@ a{text-decoration:none;color:inherit;}
    Hero animations: titre et sous-titre
    -------------------------------------------------------------------------- */
 
+/* --------------------------------------------------------------------------
+   Hero section with background image and animated blob
+   -------------------------------------------------------------------------- */
 .hero {
   position: relative;
   overflow: hidden;
+  background-image: url('src/assets/lame-mince.jpg');
+  background-position: center;
+  background-size: cover;
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero::before {
@@ -190,16 +201,19 @@ a{text-decoration:none;color:inherit;}
 }
 
 .overlay {
-  z-index: 1; /* on place l’overlay au-dessus du blob */
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 .hero-content {
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-  position: relative;
-  z-index: 2;
 }
 
 .hero-title,
@@ -222,8 +236,8 @@ a{text-decoration:none;color:inherit;}
 }
 
 @keyframes blobRotate {
-  from   { transform: rotate(0deg);   }
-  to     { transform: rotate(360deg); }
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 
 @keyframes fadeInUp {
@@ -236,6 +250,7 @@ a{text-decoration:none;color:inherit;}
     transform: translateY(0);
   }
 }
+
 
 
 /* --------------------------------------------------------------------------
