@@ -154,31 +154,33 @@ a{text-decoration:none;color:inherit;}
 .card:hover{transform:translateY(-5px);box-shadow:var(--shadow-popup)}
 .card h3{margin:var(--ui-padding) 0;font-size:1.1rem}
 
+
 /* --------------------------------------------------------------------------
-   Logo group in navbar
+   Logo placement override
    -------------------------------------------------------------------------- */
 .logo-group {
+  position: fixed;
+  top: var(--ui-offset);
+  left: var(--ui-offset);
   display: flex;
   align-items: center;
   gap: var(--ui-gap);
-  margin-right: auto; 
+  z-index: 1001;
 }
 
 .logo-group img {
-  height: 50px;
+  height: 40px;
   width: auto;
   object-fit: contain;
-  filter: brightness(0) invert(0.2); 
-  transition: filter 0.3s ease;
-}
-
-:root[data-theme="dark"] .logo-group img {
-  filter: brightness(0) invert(1); 
+  filter: none;
+  opacity: 1;
+  pointer-events: none;
 }
 
 .logo-group a:hover img {
-  transform: scale(1.05);
+  transform: none;
 }
+
 
 
 /* --------------------------------------------------------------------------
