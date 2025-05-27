@@ -149,10 +149,63 @@ a{text-decoration:none;color:inherit;}
 .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
 .hero-title{position:relative;color:var(--color-bg);font-size:clamp(2rem,5vw,4rem);text-shadow:0 2px 8px rgba(0,0,0,0.6)}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--ui-gap);padding:var(--ui-offset)}
-.card{background:var(--color-panel);border-radius:var(--ui-radius);overflow:hidden;box-shadow:var(--shadow-ui);text-align:center;transition:transform var(--anim-duration) var(--anim-ease),box-shadow var(--anim-duration) var(--anim-ease)}
-.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-popup)}
-.card h3{margin:var(--ui-padding) 0;font-size:1.1rem}
+/* --------------------------------------------------------------------------
+   Cards section – grille + motif animé
+   -------------------------------------------------------------------------- */
+.cards {
+  position: relative;            /* conteneur pour le pseudo-élément */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: var(--ui-gap);
+  padding: var(--ui-offset);
+  background: var(--color-panel);
+  border-radius: var(--ui-radius);
+  overflow: hidden;
+}
+
+.cards::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 20%, var(--color-secondary) 8%, transparent 40%),
+    radial-gradient(circle at 80% 80%, var(--color-primary) 8%, transparent 40%);
+  background-size: 150% 150%;
+  animation: movePattern 30s ease-in-out infinite alternate;
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes movePattern {
+  0% {
+    background-position: 0% 0%, 100% 100%;
+  }
+  100% {
+    background-position: 20% 20%, 80% 80%;
+  }
+}
+
+.card {
+  position: relative;            /* pour être au-dessus du motif */
+  z-index: 1;
+  background: var(--color-panel);
+  border-radius: var(--ui-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-ui);
+  text-align: center;
+  transition: transform var(--anim-duration) var(--anim-ease),
+              box-shadow var(--anim-duration) var(--anim-ease);
+}
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-popup);
+}
+.card h3 {
+  margin: var(--ui-padding) 0;
+  font-size: 1.1rem;
+}
+
 
 
 /* --------------------------------------------------------------------------
@@ -188,78 +241,6 @@ a{text-decoration:none;color:inherit;}
    -------------------------------------------------------------------------- */
 .container{max-width:1200px;margin:2rem auto;padding:0 var(--ui-offset)}
 .container h1{font-size:2rem;margin-bottom:1rem}
-
-/* --------------------------------------------------------------------------
-   Sample Name Badge
-   -------------------------------------------------------------------------- */
-.rock-name{position:fixed;top:var(--ui-offset);right:var(--ui-offset);display:flex;align-items:center;gap:var(--ui-gap);background:var(--color-panel);color:var(--color-primary);padding:var(--ui-padding) calc(var(--ui-padding)*1.75);border-radius:var(--ui-radius);font-size:var(--font-scale);font-weight:600;backdrop-filter:blur(4px);box-shadow:var(--shadow-ui);animation:fadeIn var(--anim-duration) var(--anim-ease);z-index:200}
-.rock-name .icon{width:var(--icon-size);height:var(--icon-size);stroke:var(--color-primary)}
-
-/* --------------------------------------------------------------------------
-   Theme Toggle Button
-   -------------------------------------------------------------------------- */
-#toggleTheme{position:fixed;top:60px;right:20px;width:40px;height:40px;background:var(--color-panel);border-radius:50%;box-shadow:var(--shadow-ui);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100}
-#toggleTheme .icon{width:24px;height:24px;stroke:var(--color-primary);transition:transform 0.2s ease}
-#toggleTheme:hover .icon{transform:scale(1.1)}
-
-/* --------------------------------------------------------------------------
-   Toast Notifications
-   -------------------------------------------------------------------------- */
-#toast{position:fixed;bottom:20px;right:20px;background:var(--color-primary);color:var(--color-bg);padding:10px 16px;border-radius:10px;box-shadow:0 4px 16px rgba(0,0,0,0.15);opacity:0;transform:translateY(20px);transition:opacity 0.3s ease,transform 0.3s ease;display:flex;align-items:center;gap:8px;pointer-events:none;z-index:500}
-#toast.show{opacity:1;transform:translateY(0)}
-#toastText{margin:0}
-
-/* --------------------------------------------------------------------------
-   Toolbar UI
-   -------------------------------------------------------------------------- */
-.toolbar-ui{position:fixed;bottom:var(--toolbar-padding);left:50%;transform:translateX(-50%);display:flex;gap:var(--toolbar-padding);background:var(--color-panel);padding:var(--toolbar-padding) calc(var(--toolbar-padding));border-radius:calc(var(--toolbar-padding)*2);box-shadow:var(--shadow-ui);backdrop-filter:blur(8px);animation:fadeIn var(--anim-duration) var(--anim-ease);z-index:100}
-.toolbar-ui button{padding:var(--toolbar-padding);border:none;border-radius:var(--toolbar-padding);transition:transform 0.2s ease,box-shadow 0.2s ease;display:flex;align-items:center;justify-content:center}
-.toolbar-ui button:hover{transform:scale(1.1);box-shadow:0 4px 12px rgba(81,36,122,0.2)}
-.toolbar-ui .icon{width:var(--toolbar-icon-size);height:var(--toolbar-icon-size);stroke:var(--color-primary);stroke-width:2}
-
-/* --------------------------------------------------------------------------
-   Loader
-   -------------------------------------------------------------------------- */
-#loader3D, .geo-loader{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:600;display:none}
-.geo-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;animation:fadeIn var(--anim-duration) var(--anim-ease)}
-.circle-loader{animation:dash 1.5s ease-in-out infinite;stroke-dasharray:90,150;color:var(--color-primary)}
-.loader-text{font-size:1rem;font-weight:600;color:var(--color-fg);margin-top:16px}
-
-/* --------------------------------------------------------------------------
-   Magnifier
-   -------------------------------------------------------------------------- */
-.loupe2d{position:absolute;width:100px;height:100px;border:2px solid var(--color-primary);border-radius:50%;background:var(--color-panel);box-shadow:0 4px 12px rgba(0,0,0,0.15)}
-
-/* --------------------------------------------------------------------------
-   Meta Sidebar
-   -------------------------------------------------------------------------- */
-.meta-sidebar{position:fixed;top:0;right:0;width:300px;height:100%;background:var(--color-panel);box-shadow:-4px 0 12px rgba(0,0,0,0.1);padding:var(--ui-offset);overflow-y:auto;transform:translateX(100%);transition:transform var(--anim-duration) var(--anim-ease);z-index:150}
-.meta-sidebar.open{transform:translateX(0)}
-.meta-sidebar h2{margin-top:0}
-
-/* --------------------------------------------------------------------------
-   Popup
-   -------------------------------------------------------------------------- */
-.popup{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--color-panel);border-radius:var(--ui-radius);box-shadow:var(--shadow-popup);padding:var(--ui-offset) var(--ui-offset*2);z-index:200;display:none}
-.popup.open{display:block}
-
-/* --------------------------------------------------------------------------
-   Tooltip
-   -------------------------------------------------------------------------- */
-.tooltip{position:relative;display:inline-block}
-.tooltip .tooltip-text{visibility:hidden;width:max-content;background:var(--color-tooltip-bg);color:var(--color-tooltip-fg);text-align:center;padding:var(--ui-padding);border-radius:var(--ui-radius);position:absolute;z-index:300;bottom:125%;left:50%;transform:translateX(-50%);opacity:0;transition:opacity 0.3s}
-.tooltip:hover .tooltip-text{visibility:visible;opacity:1}
-
-/* --------------------------------------------------------------------------
-   View Toggle
-   -------------------------------------------------------------------------- */
-.view-toggle{display:flex;gap:var(--ui-padding)}
-.view-toggle button{background:var(--color-panel);border-radius:var(--ui-radius);padding:var(--ui-padding);transition:background var(--anim-duration) var(--anim-ease)}
-.view-toggle button.active{background:var(--color-primary);color:var(--color-bg)}
-
-/* --------------------------------------------------------------------------
-   Hero animations: titre et sous-titre
-   -------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------
    Hero section with background image and animated blob
