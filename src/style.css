@@ -1,96 +1,215 @@
+/* --------------------------------------------------------------------------
+   Variables (palette, typographie, thèmes)
+   Source: variables.css fileciteturn0file3
+   -------------------------------------------------------------------------- */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+    --ui-offset: clamp(0.5rem, 5vw, 1rem);
+    --ui-padding: clamp(0.25rem, 1vw, 0.5rem);
+    --ui-gap: clamp(0.25rem, 1vw, 0.5rem);
+    --ui-radius: clamp(0.5rem, 3vw, 1rem);
+    --icon-size: clamp(0.87rem, 2.5vw, 1.2rem);
+    --font-scale: clamp(0.75rem, 2vw, 0.9rem);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+    --color-bg: #ffffff;
+    --color-fg: #333333;
+    --color-primary: #51247A;
+    --color-secondary: #CBAE88;
+    --color-panel: rgba(255, 255, 255, 0.95);
+    --shadow-ui: 0 8px 20px rgba(0, 0, 0, 0.1);
+    --shadow-popup: 0 6px 20px rgba(0, 0, 0, 0.12);
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+    --font-base: 'Open Sans', sans-serif;
+    --anim-duration: 0.5s;
+    --anim-ease: ease-out;
 }
 
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+:root[data-theme="dark"] {
+    --color-bg: #1a1a1a;
+    --color-fg: #eeeeee;
+    --color-primary: #CBAE88;
+    --color-secondary: #51247A;
+    --color-panel: rgba(30, 30, 30, 0.95);
+    --shadow-ui: 0 8px 20px rgba(0, 0, 0, 0.4);
+    --shadow-popup: 0 6px 20px rgba(0, 0, 0, 0.6);
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* --------------------------------------------------------------------------
+   Reset & typographie de base
+   Source: base.css fileciteturn0file0
+   -------------------------------------------------------------------------- */
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--color-bg);
+    color: var(--color-fg);
 }
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+body,
+button,
+.view-btn,
+.tooltip-text,
+.loader-text {
+    font-family: var(--font-base) !important;
+    margin: 0;
+    padding: 0;
 }
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* --------------------------------------------------------------------------
+   Utilitaires généraux
+   Source: utilities.css fileciteturn0file5
+   -------------------------------------------------------------------------- */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.btn-hover-scale {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-hover-scale:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(81, 36, 122, 0.2);
+}
+
+/* --------------------------------------------------------------------------
+   Navbar commune
+   -------------------------------------------------------------------------- */
+.navbar {
+    background: var(--color-panel);
+    box-shadow: var(--shadow-ui);
+    padding: var(--ui-padding) var(--ui-offset);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: var(--ui-gap);
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+}
+.navbar a {
+    color: var(--color-fg);
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--ui-padding) var(--ui-offset);
+    border-radius: var(--ui-radius);
+    transition: background var(--anim-duration) var(--anim-ease);
+}
+.navbar a:hover {
+    background: var(--color-secondary);
+    color: var(--color-bg);
+}
+
+/* --------------------------------------------------------------------------
+   Hero section
+   -------------------------------------------------------------------------- */
+.hero {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+}
+.hero .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+}
+.hero-title {
+    position: relative;
+    color: var(--color-bg);
+    font-size: clamp(2rem, 5vw, 4rem);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Cards layout
+   -------------------------------------------------------------------------- */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--ui-gap);
+    padding: var(--ui-offset);
+}
+.card {
+    background: var(--color-panel);
+    border-radius: var(--ui-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-ui);
+    text-align: center;
+    transition: transform var(--anim-duration) var(--anim-ease),
+                box-shadow var(--anim-duration) var(--anim-ease);
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-popup);
+}
+.card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+.card h3 {
+    margin: var(--ui-padding) 0;
+    color: var(--color-fg);
+    font-size: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Animations globales
+   Source: animations.css fileciteturn0file4
+   -------------------------------------------------------------------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+@keyframes dash {
+    0%   { stroke-dasharray: 1,200; stroke-dashoffset: 0; }
+    50%  { stroke-dasharray: 90,150; stroke-dashoffset: -35; }
+    100% { stroke-dasharray: 90,150; stroke-dashoffset: -124; }
+}
+@keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(81,36,122,0.3); }
+    50%      { box-shadow: 0 0 0 8px rgba(81,36,122,0); }
+}
+
+/* --------------------------------------------------------------------------
+   Styles responsives
+   Source: mobile.css fileciteturn0file2
+   -------------------------------------------------------------------------- */
+@media screen and (max-width: 1280px) {
+    .navbar ul {
+        flex-wrap: wrap;
+    }
+    .hero {
+        height: 40vh;
+    }
+    .cards {
+        padding: var(--ui-padding);
+    }
 }
