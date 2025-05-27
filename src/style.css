@@ -74,10 +74,76 @@ a{text-decoration:none;color:inherit;}
 /* --------------------------------------------------------------------------
    Layout: Navbar, Hero & Cards
    -------------------------------------------------------------------------- */
-.navbar{background:var(--color-panel);box-shadow:var(--shadow-ui);padding:var(--ui-padding) var(--ui-offset);position:sticky;top:0;z-index:100;}
-.navbar ul{display:flex;justify-content:center;gap:var(--ui-gap);}
-.navbar a{padding:var(--ui-padding) var(--ui-offset);border-radius:var(--ui-radius);font-weight:600;transition:background var(--anim-duration) var(--anim-ease)}
-.navbar a:hover{background:var(--color-secondary);color:var(--color-bg)}
+/* --------------------------------------------------------------------------
+   Navbar – boutons stylés et animations
+   -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Navbar flottante et transparente
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: fixed;
+  top: var(--ui-offset);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--ui-gap);
+  padding: var(--ui-padding) calc(var(--ui-offset) * 2);
+  background: transparent;
+  z-index: 1000;
+  pointer-events: auto;
+}
+
+.navbar ul {
+  display: flex;
+  gap: var(--ui-gap);
+  margin: 0;
+  padding: 0;
+}
+
+.navbar a {
+  position: relative;
+  color: var(--color-bg);
+  background: rgba(255, 255, 255, 0.1);
+  padding: var(--ui-padding) var(--ui-offset);
+  border-radius: var(--ui-radius);
+  transition: 
+    background var(--anim-duration) var(--anim-ease),
+    color var(--anim-duration) var(--anim-ease),
+    transform var(--anim-duration) var(--anim-ease);
+  font-weight: 600;
+}
+
+.navbar a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.navbar a span {
+  position: relative;
+  z-index: 1;
+}
+
+.navbar a.active {
+  background: var(--color-secondary);
+  color: var(--color-bg);
+  transform: translateY(-2px);
+}
+
+/* Thème sombre */
+:root[data-theme="dark"] .navbar a {
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--color-fg);
+}
+:root[data-theme="dark"] .navbar a:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+:root[data-theme="dark"] .navbar a.active {
+  background: var(--color-secondary);
+  color: var(--color-bg);
+}
+
+
 
 .hero{position:relative;width:100%;height:60vh;display:flex;align-items:center;justify-content:center;background-position:center;background-size:cover}
 .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
