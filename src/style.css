@@ -150,83 +150,6 @@ a{text-decoration:none;color:inherit;}
 .hero-title{position:relative;color:var(--color-bg);font-size:clamp(2rem,5vw,4rem);text-shadow:0 2px 8px rgba(0,0,0,0.6)}
 
 /* --------------------------------------------------------------------------
-   Cards section – grille + motif animé
-   -------------------------------------------------------------------------- */
-/* --------------------------------------------------------------------------
-   Cards section – fond créatif en dégradé + texture subtile
-   -------------------------------------------------------------------------- */
-.cards {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  gap: var(--ui-gap);
-  padding: var(--ui-offset);
-  background: linear-gradient(
-    135deg,
-    rgba(81, 36, 122, 0.1) 0%,
-    rgba(203, 174, 136, 0.1) 100%
-  );
-  border-radius: var(--ui-radius);
-  overflow: hidden;
-}
-
-/* Texture “grain” légère par-dessus */
-.cards::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: 
-    repeating-radial-gradient(
-      circle at center,
-      rgba(255,255,255,1),
-      rgba(255,255,255,1) 1px,
-      transparent 1px,
-      transparent 3px
-    );
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* S’assurer que les cards restent au premier plan */
-.card {
-  position: relative;
-  z-index: 1;
-}
-
-
-
-@keyframes movePattern {
-  0% {
-    background-position: 0% 0%, 100% 100%;
-  }
-  100% {
-    background-position: 20% 20%, 80% 80%;
-  }
-}
-
-.card {
-  position: relative;            /* pour être au-dessus du motif */
-  z-index: 1;
-  background: var(--color-panel);
-  border-radius: var(--ui-radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-ui);
-  text-align: center;
-  transition: transform var(--anim-duration) var(--anim-ease),
-              box-shadow var(--anim-duration) var(--anim-ease);
-}
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-popup);
-}
-.card h3 {
-  margin: var(--ui-padding) 0;
-  font-size: 1.1rem;
-}
-
-
-
-/* --------------------------------------------------------------------------
    Logo placement override
    -------------------------------------------------------------------------- */
 .logo-group {
@@ -343,6 +266,79 @@ a{text-decoration:none;color:inherit;}
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* --------------------------------------------------------------------------
+   Categories grid (5 cartes interactives)
+   -------------------------------------------------------------------------- */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--ui-gap);
+  padding: var(--ui-offset);
+  margin: var(--ui-offset) 0;
+}
+
+.category-card {
+  --bg-light: rgba(255,255,255,0.8);
+  --bg-dark:  rgba(30,30,30,0.8);
+
+  background: var(--bg-light);
+  color: var(--color-primary);
+  border-radius: var(--ui-radius);
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-ui);
+  position: relative;
+  overflow: hidden;
+  transition: 
+    transform var(--anim-duration) var(--anim-ease),
+    box-shadow var(--anim-duration) var(--anim-ease),
+    background var(--anim-duration) var(--anim-ease);
+}
+
+:root[data-theme="dark"] .category-card {
+  background: var(--bg-dark);
+  color: var(--color-secondary);
+}
+
+.category-card i {
+  width: 48px;
+  height: 48px;
+  stroke-width: 1.5;
+  margin-bottom: 0.75rem;
+  stroke: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.category-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, currentColor 0%, transparent 70%);
+  opacity: 0.05;
+  transition: opacity 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-popup);
+  background: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.category-card:hover i {
+  transform: rotate(15deg) scale(1.1);
+}
+
+.category-card:hover::before {
+  opacity: 0.2;
 }
 
 /* --------------------------------------------------------------------------

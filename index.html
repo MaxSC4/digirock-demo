@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="src/style.css" />
 </head>
 <body>
-
   <!-- Groupe de logos fixé en haut à gauche -->
   <div class="logo-group">
     <a href="https://www.geops.universite-paris-saclay.fr/" target="_blank" rel="noopener">
@@ -36,26 +35,32 @@
     </div>
   </section>
 
-  <!-- Cards -->
-  <section class="cards">
-    <!-- Exemple de card fake -->
-    <div class="card">
-      <img src="src/assets/massif_des_bornes.png" alt="Massif des Bornes">
-      <h3>Massif des Bornes (Carte)</h3>
-    </div>
-    <div class="card">
-      <img src="src/assets/basalte.png" alt="Basalte">
-      <h3>Basalte</h3>
-    </div>
-    <!-- … autres cartes fake … -->
-
-    <!-- Carte réelle : benmoréite -->
-    <a class="card" href="https://maxsc4.github.io/digirocks/" target="_blank" rel="noopener">
-      <img src="src/assets/benmoreite.png" alt="Benmoréite">
-      <h3>Benmoréite</h3>
-    </a>
-  </section>
-
+<section class="categories">
+  <a href="./sedimentaires.html" class="category-card">
+    <i data-lucide="Layers"></i>
+    <h3>Roches sédimentaires</h3>
+  </a>
+  <a href="./magmatiques.html" class="category-card">
+    <i data-lucide="Activity"></i>
+    <h3>Roches magmatiques</h3>
+  </a>
+  <a href="./metamorphiques.html" class="category-card">
+    <i data-lucide="Mountain"></i>
+    <h3>Roches métamorphiques</h3>
+  </a>
+  <a href="./meteorites.html" class="category-card">
+    <i data-lucide="Star"></i>
+    <h3>Météorites</h3>
+  </a>
+  <a href="./cartes-etc.html" class="category-card">
+    <i data-lucide="Map"></i>
+    <h3>Cartes &amp; autres</h3>
+  </a>
+</section>
   <script type="module" src="src/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/lucide.min.js"></script>
+  <script>
+    lucide.replace();
+  </script>
 </body>
 </html>
