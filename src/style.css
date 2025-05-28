@@ -152,6 +152,9 @@ a{text-decoration:none;color:inherit;}
 /* --------------------------------------------------------------------------
    Cards section – grille + motif animé
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Cards section – fond créatif en dégradé + texture subtile
+   -------------------------------------------------------------------------- */
 .cards {
   position: relative;
   display: grid;
@@ -160,33 +163,36 @@ a{text-decoration:none;color:inherit;}
   padding: var(--ui-offset);
   background: linear-gradient(
     135deg,
-    rgba(81, 36, 122, 0.05) 0%,
-    rgba(203, 174, 136, 0.05) 100%
+    rgba(81, 36, 122, 0.1) 0%,
+    rgba(203, 174, 136, 0.1) 100%
   );
   border-radius: var(--ui-radius);
   overflow: hidden;
 }
 
+/* Texture “grain” légère par-dessus */
 .cards::before {
   content: '';
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(81, 36, 122, 0.05) 0%,
-      rgba(203, 174, 136, 0.05) 100%
-    ),
+  background: 
     repeating-radial-gradient(
       circle at center,
-      rgba(81,36,122,0.02),
-      rgba(81,36,122,0.02) 1px,
+      rgba(255,255,255,1),
+      rgba(255,255,255,1) 1px,
       transparent 1px,
       transparent 3px
     );
   pointer-events: none;
   z-index: 0;
 }
+
+/* S’assurer que les cards restent au premier plan */
+.card {
+  position: relative;
+  z-index: 1;
+}
+
 
 
 @keyframes movePattern {
