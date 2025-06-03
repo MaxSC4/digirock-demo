@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DigiRock3D Demo</title>
+  <script type="module" crossorigin src="/digirock-demo/assets/main-Bt4lM7jz.js"></script>
+  <link rel="stylesheet" crossorigin href="/digirock-demo/assets/main-DknmmU2M.css">
+</head>
+<body>
+  <!-- Groupe de logos fixé en haut à gauche -->
+  <div class="logo-group">
+    <a href="https://www.geops.universite-paris-saclay.fr/" target="_blank" rel="noopener">
+      <img src="/digirock-demo/assets/geops-logo-DXzAR2oD.png" alt="GEOPS">
+    </a>
+    <a href="https://www.universite-paris-saclay.fr" target="_blank" rel="noopener">
+        <img src="/digirock-demo/assets/upsaclay-logo-CXL4YHZ1.png" alt="Université Paris-Saclay">
+    </a>
+  </div>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="./index.html"><span>Accueil</span></a></li>
+      <li><a href="./tutoriel.html"><span>Tutoriel</span></a></li>
+      <li><a href="./exercices.html"><span>Exercices</span></a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title">DigiRock3D</h1>
+      <h2 class="hero-subtitle">L'observation pétrographique réinventée</h2>
+      <!-- Radial menu (uniquement sur l'accueil) -->
+      <div class="radial-menu">
+        <div class="menu-button" id="radialToggle">
+          <i data-lucide="menu"></i>
+        </div>
+
+        <a href="./sedimentaires.html" class="menu-item tooltip" data-angle="-90deg">
+          <i data-lucide="layers"></i>
+          <span class="tooltip-text">Roches sédimentaires</span>
+        </a>
+        <div class="menu-item tooltip" id="mag-item">
+          <i data-lucide="activity"></i>
+          <span class="tooltip-text">Roches magmatiques</span>
+          <a class="ben-link" href="https://maxsc4.github.io/digirocks/" target="_blank" rel="noopener">Benmoréite</a>
+        </div>
+        <a href="./metamorphiques.html" class="menu-item tooltip" data-angle="54deg">
+          <i data-lucide="mountain"></i>
+          <span class="tooltip-text">Roches métamorphiques</span>
+        </a>
+        <a href="./meteorites.html" class="menu-item tooltip" data-angle="126deg">
+          <i data-lucide="star"></i>
+          <span class="tooltip-text">Météorites</span>
+        </a>
+        <a href="./cartes-etc.html" class="menu-item tooltip" data-angle="198deg">
+          <i data-lucide="map"></i>
+          <span class="tooltip-text">Cartes & autres</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      const toggle     = document.getElementById('radialToggle');
+      const radialMenu = document.querySelector('.radial-menu');
+      const items      = Array.from(radialMenu.querySelectorAll('.menu-item'));
+
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = radialMenu.classList.toggle('open');
+
+        const spacingX = 80;    // écart horizontal entre chaque bouton
+        const offsetY  = 80;    // distance verticale sous le menu-button
+
+        items.forEach((item, i) => {
+          if (isOpen) {
+            // calculer un décalage X centré : (-2, -1, 0, +1, +2) × spacingX
+            const centerIndex = (items.length - 1) / 2;
+            const offsetX = (i - centerIndex) * spacingX;
+
+            item.style.transitionDelay = `${i * 50}ms`;
+            item.style.transform       =
+              `translate(-50%,-50%) translate(${offsetX}px, ${offsetY}px)`;
+            item.style.opacity         = '1';
+          } else {
+            // fermer en sens inverse
+            item.style.transitionDelay = `${(items.length - i - 1) * 50}ms`;
+            item.style.transform       = 'translate(-50%,-50%)';
+            item.style.opacity         = '0';
+          }
+        });
+
+        const magItem = document.getElementById('mag-item');
+
+        magItem.addEventListener('click', (e) => {
+          e.stopPropagation();
+          magItem.classList.toggle('show-ben');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
