@@ -134,7 +134,7 @@ a { text-decoration:none; color:inherit; }
   position:absolute;
   top:-25%; left:-25%;
   width:150%; height:150%;
-  background:radial-gradient(circle at center, rgba(81,36,122,0.6), rgba(203,174,136,0.6), rgba(81,36,122,0.6));
+  background:radial-gradient(circle at center, rgba(81,36,122,0.15), rgba(203,174,136,0.15), rgba(81,36,122,0.15));
   filter:blur(100px);
   animation:blobRotate 30s linear infinite;
   z-index:0;
